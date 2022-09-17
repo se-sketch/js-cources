@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Apply JavaScript example</title>
+  </head>
+
+  <body>
+    
+		<input type="text" id="input">
+		<script>
+		  input.onpaste = function(event) {
+		    console.log("paste: " + event.clipboardData.getData('text/plain'));
+		    event.preventDefault();
+		  };
+
+		  input.oncut = input.oncopy = function(event) {
+		    console.log(event.type + '-' + document.getSelection());
+		    event.preventDefault();
+		  };
+		</script>
+
+		<hr>
+
+		initial Deposit
+		<input type="number" name="initialDeposit" id="initialDeposit" value="10000">
+		<br>
+		<br>
+
+		How many month?
+		<select id="selectMonth">
+			<option value="3">3 (minimum)</option>
+			<option value="6">6 (half year)</option>
+			<option value="12" selected>12 (one year)</option>
+			<option value="18">18 (1.5 years)</option>
+			<option value="24">24 (2 years)</option>
+			<option value="30">30 (2.5 years)</option>
+			<option value="36">36 (3 years)</option>
+			<option value="60">60 (5 years)</option>
+		</select>
+
+		<br>
+		<br>
+
+		interest per year?
+		<input type="number" name="interestPerYear" id="interestPerYear" value="5">
+
+		<style type="text/css">
+			.row > div{
+				display: inline-block;
+				vertical-align: bottom;
+			}
+
+			#wasCol{
+				background-color: red;
+			}
+			#becomesCol{
+				background-color: green;
+			}
+		</style>
+
+		<div>
+			<div class="row">
+				<div>
+					<div>Was</div>
+					<div id="was"></div>
+				</div>	
+				<div>
+					<div>Becomes</div>
+					<div id="becomes"></div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div id="wasCol">col1</div>
+				<div id="becomesCol">col2</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			
+			function computation(){
+				let initial = initialDeposit.value;
+				let interest = interestPerYear.value;
+				let years = selectMonth.value / 12;
+
+				initial = initial > 1 ? initial : 1;
+				interest = interest > 1 ? interest : 1;
+
+				let result = Math.round(initial * (1 + interest / 100) ** years);
+
+				wasCol.style.height = initial / 100 + 'px';
+				becomesCol.style.height = result / 100 + 'px';
+
+				was.innerHTML = initial;
+				becomes.innerHTML = result;
+			}
+
+			computation();
+
+			initialDeposit.addEventListener('input', (event) => {
+				computation();
+			});
+
+			selectMonth.addEventListener('change', (event) => {
+				computation();
+			});
+
+			interestPerYear.addEventListener('input', (event) => {
+				computation();
+			});
+
+		</script>
+
+
+		<hr>
+
+
+
+	  <style>
+	    td select,
+	    td input {
+	      width: 150px;
+	    }
+
+	    #diagram td {
+	      vertical-align: bottom;
+	      text-align: center;
+	      padding: 10px;
+	    }
+
+	    #diagram div {
+	      margin: auto;
+	    }
+	  </style>
+
+	  Deposit calculator.
+
+	  <form name="calculator">
+	    <table>
+	      <tr>
+	        <td>Initial deposit</td>
+	        <td>
+	          <input name="money" type="number" value="10000" required>
+	        </td>
+	      </tr>
+	      <tr>
+	        <td>How many months?</td>
+	        <td>
+	          <select name="months">
+	            <option value="3">3 (minimum)</option>
+	            <option value="6">6 (half-year)</option>
+	            <option value="12" selected>12 (one year)</option>
+	            <option value="18">18 (1.5 years)</option>
+	            <option value="24">24 (2 years)</option>
+	            <option value="30">30 (2.5 years)</option>
+	            <option value="36">36 (3 years)</option>
+	            <option value="60">60 (5   years)</option>
+	          </select>
+	        </td>
+	      </tr>
+	      <tr>
+	        <td>Interest per year?</td>
+	        <td>
+	          <input name="interest" type="number" value="5" required>
+	        </td>
+	      </tr>
+	    </table>
+	  </form>
+
+
+	  <table id="diagram">
+	    <tr>
+	      <th>Was:</th>
+	      <th>Becomes:</th>
+	    </tr>
+	    <tr>
+	      <th id="money-before"></th>
+	      <th id="money-after"></th>
+	    </tr>
+	    <td>
+	      <div style="background: red;width:40px;height:100px"></div>
+	    </td>
+	    <td>
+	      <div style="background: green;width:40px;height:0" id="height-after"></div>
+	    </td>
+	  </table>
+
+	  <script>
+
+	    let form = document.forms.calculator;
+
+	    form.money.oninput = calculate;
+	    form.months.onchange = calculate;
+	    form.interest.oninput = calculate;
+
+	    function calculate() {
+	      let initial = +form.money.value;
+	      if (!initial) return;
+
+	      let interest = form.interest.value * 0.01;
+
+	      if (!interest) return;
+
+	      let years = form.months.value / 12;
+	      if (!years) return;
+
+	      let result = Math.round(initial * (1 + interest) ** years);
+
+	      let height = result / form.money.value * 100 + 'px';
+	      document.getElementById('height-after').style.height = height;
+	      document.getElementById('money-before').innerHTML = form.money.value;
+	      document.getElementById('money-after').innerHTML = result;
+	    }
+
+	    calculate();
+	  </script>		
+
+
+  </body>
+</html>

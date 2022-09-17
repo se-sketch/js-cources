@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Apply JavaScript example</title>
+	
+		<style type="text/css">
+
+			.menu li {
+			  display: inline-block;
+			  margin: 0;
+			}
+
+			.menu > li a {
+			  display: inline-block;
+			  margin: 0 2px;
+			  outline: none;
+			  text-align: center;
+			  text-decoration: none;
+			  font: 14px/100% sans-serif;
+			  padding: .5em 2em .55em;
+			  text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+			  border-radius: .5em;
+			  box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+			  color: #d9eef7;
+			  border: solid 1px #0076a3;
+			  background: #0095cd;
+			}
+
+			.menu > li:hover a {
+			  text-decoration: none;
+			  background: #007ead;
+			}
+
+
+	    #contents {
+	      padding: 5px;
+	      border: 1px green solid;
+	    }
+
+		</style>
+  </head>
+
+  <body>
+    
+		<ul id="menu" class="menu">
+		  <li><a href="/html">HTML</a></li>
+		  <li><a href="/javascript">JavaScript</a></li>
+		  <li><a href="/css">CSS</a></li>
+		</ul>
+
+		<script type="text/javascript">
+			menu.onclick = function(event) {
+			  if (event.target.nodeName != 'A') return;
+
+			  let href = event.target.getAttribute('href');
+			  console.log( href ); // ...can be loading from the server, UI generation etc
+
+			  return false; // prevent browser action (don't go to the URL)
+			};
+		</script>
+
+
+		<button>Right-click shows browser context menu</button>
+
+		<button oncontextmenu="console.log('Draw our menu'); return false">
+		  Right-click shows our context menu
+		</button>
+
+		<hr>
+		
+		<p>Right-click for the document menu (added a check for event.defaultPrevented)</p>
+		<button id="elem">Right-click for the button menu</button>
+
+		<script>
+		  elem.oncontextmenu = function(event) {
+		    event.preventDefault();
+		    console.log("Button context menu");
+		  };
+
+		  document.oncontextmenu = function(event) {
+		    if (event.defaultPrevented) return;
+
+		    event.preventDefault();
+		    alert("Document context menu");
+		  };
+		</script>
+
+		<hr>
+
+		<script>
+		  function handler(event) {
+		    console.log( "..." );
+		    event.preventDefault();
+		    //return false;
+		  }
+		</script>
+
+		<a href="https://w3.org" onclick="handler(event)">the browser will go to w3.org</a>		
+
+		<hr>
+
+		<fieldset id="contents">
+	    <legend>#contents</legend>
+	    <p>
+	      How about to read <a href="https://wikipedia.org">Wikipedia</a> or visit 
+	      <a href="https://w3.org"><i>W3.org</i></a> and learn about modern standards?
+	    </p>
+		</fieldset>
+
+		<script type="text/javascript">
+			
+			contents.addEventListener('click', (event) => {
+				let target = event.target.closest('a');
+
+				if (target && contents.contains(target)){
+					let href = target.getAttribute('href');
+					if (!confirm(`Do you really want to leave for ${href}?`)) event.preventDefault();
+				}
+
+			});
+
+		</script>
+
+		<hr>
+
+  </body>
+</html>

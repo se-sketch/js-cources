@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Apply JavaScript example</title>
+  </head>
+
+  <body>
+
+    <table id="table">
+      <tr>
+        <th colspan="3"><em>Bagua</em> Chart: Direction, Element, Color, Meaning</th>
+      </tr>
+      <tr>
+        <td class="nw"><strong>Northwest</strong><br>Metal<br>Silver<br>Elders</td>
+        <td class="n">...</td>
+        <td class="ne">...</td>
+      </tr>
+      <tr>...2 more lines of this kind...</tr>
+      <tr>...2 more lines of this kind...</tr>
+    </table>
+
+    <script type="text/javascript">
+      let selectedTd;
+
+      table.onclick = function(event) {
+        let target = event.target; // where was the click?
+
+        if (target.tagName != 'TD') return; // not on TD? Then we're not interested
+
+        highlight(target); // highlight it
+      };
+
+      function highlight(td) {
+        if (selectedTd) { // remove the existing highlight if any
+          selectedTd.classList.remove('highlight');
+        }
+        selectedTd = td;
+        selectedTd.classList.add('highlight'); // highlight the new td
+      }  
+    </script>
+
+
+    <hr>
+
+    <div id="menu">
+      <button data-action='save'>save</button>
+      <button data-action='load'>load</button>
+      <button data-action='search'>search</button>
+    </div>
+
+    <script type="text/javascript">
+      class Menu{
+        constructor(elem){
+          this._elem = elem;
+          elem.onclick = this.onClick.bind(this);
+        }
+
+        save(){
+          console.log('save');
+        }
+
+        load(){
+          console.log('load');
+        }
+
+        search(){
+          console.log('search');
+        }
+
+        onClick(event){
+          let action = event.target.dataset.action;
+          if (action) this[action]();
+        }
+      }
+
+      new Menu(menu);
+
+    </script>
+
+    <hr>
+
+    Counter: <input type="button" name="" value="1" data-counter>
+    One more counter: <input type="button" name="" value="2" data-counter>
+
+    <script type="text/javascript">
+      document.addEventListener('click', (event)=>{
+        if (event.target.dataset.counter != undefined) event.target.value++;
+      });
+    </script>
+
+    <hr>
+
+    <button data-toggle-id='my-form'>Show the subscription form</button>
+
+    <form id="my-form" hidden style="margin-top: 10px">
+      Your mail: <input type="email">
+    </form>
+
+    <script type="text/javascript">
+      document.addEventListener('click', (event)=>{
+        let id = event.target.dataset.toggleId;
+
+        if(!id) return;
+
+        let elem = document.getElementById(id);
+        elem.hidden = !elem.hidden;
+      })  
+    </script>
+
+    <hr>
+
+  </body>
+</html>

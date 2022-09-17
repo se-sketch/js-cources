@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Apply JavaScript example</title>
+  </head>
+
+  <body>
+		    
+		<textarea id="code">return "hi";</textarea>
+		<button id="button">Поехали</button>
+		<pre id="output"></pre>
+
+		<script>
+		  code.style.width = '50%';
+		  code.style.height = '250px';
+
+		  let btnButton = document.querySelector('#button');
+		  btnButton.addEventListener('click', (event) => {
+		  	
+		  	let textCode = code.textContent;
+
+		  	let func = new Function(textCode);
+
+		  	let result = func();
+
+		  	output.textContent = result;
+
+		  	//console.log(func());
+		  });
+
+		</script>
+
+
+		<input type="text" id="field">
+		<div id="suggestions" style="cursor: pointer"></div>
+
+		<script>
+		  // Строит массив из имён глобальных перменных, 
+		  // типа  'alert', 'document', и 'scrollTo'
+		  var terms = [];
+		  for (var name in window)
+		    terms.push(name);
+
+		  // Ваш код.
+
+		  field.addEventListener('keyup', (event) => {
+		  	if (event.key == 'ArrowDown')	{
+		  		/*
+		  		let firstEl = suggestions.querySelector('div');
+		  		firstEl.focus();
+		  		*/
+		  		return;
+		  	}
+
+				suggestions.innerHTML = '';
+
+		  	let text = (field.value).trim();
+		  	if (text == '') return;
+
+				terms.forEach(function(item) {
+					if (item.startsWith(text)){
+						let div = document.createElement('div');
+						div.innerHTML = item;
+						//div.tabIndex = 0;
+						suggestions.appendChild(div);
+					}
+				});
+		  });
+
+		  
+		  suggestions.addEventListener('click', (event) => {
+		  	field.value = event.target.textContent;
+		  	suggestions.innerHTML = '';
+		  });
+
+
+		</script>		
+
+  </body>
+</html>

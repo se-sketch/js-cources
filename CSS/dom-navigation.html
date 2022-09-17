@@ -1,0 +1,244 @@
+<html>
+<body>
+  <div>Users:</div>
+  <ul>
+    <li>John</li>
+    <li>Pete</li>
+  </ul>
+
+
+  <table id="table">
+    <tr>
+      <td>one</td><td>two</td><td>three</td><td>four</td>
+    </tr>
+    <tr>
+      <td>one</td><td>two</td><td>three</td><td>four</td>
+    </tr>
+    <tr>
+      <td>one</td><td>two</td><td>three</td><td>four</td>
+    </tr>
+    <tr>
+      <td>one</td><td>two</td><td>three</td><td>four</td>
+    </tr>
+  </table>
+
+  <table id="table2">
+    <tr>
+      <td>Your age:</td>
+
+      <td>
+        <label>
+          <input type="radio" name="age" value="young" checked> less than 18
+        </label>
+        <label>
+          <input type="radio" name="age" value="mature"> from 18 to 50
+        </label>
+        <label>
+          <input type="radio" name="age" value="senior"> more than 60
+        </label>
+      </td>
+    </tr>
+  </table>
+
+
+  <table id="age-table">
+    <tr>
+      <td>Your age:</td>
+      <td>
+        <label>
+          <input type="radio" name="age" value="young" checked> less than 18
+        </label>
+        <label>
+          <input type="radio" name="age" value="mature"> from 18 to 50
+        </label>
+        <label>
+          <input type="radio" name="age" value="senior"> more than 60
+        </label>
+      </td>
+    </tr>
+
+    <tr>
+      <td>Your age:</td>
+      <td>
+        <label>
+          <input type="radio" name="age" value="young" checked> less than 18
+        </label>
+        <label>
+          <input type="radio" name="age" value="mature"> from 18 to 50
+        </label>
+        <label>
+          <input type="radio" name="age" value="senior"> more than 60
+        </label>
+      </td>
+    </tr>
+  </table>
+
+  <form name="search">
+    <div class="article">Article</div>
+    <div class="long article">Long article</div>
+
+    <label>
+      <input type="radio" name="age" value="young" checked> less than 18
+    </label>
+    <label>
+      <input type="radio" name="age" value="mature"> from 18 to 50
+    </label>
+    <label>
+      <input type="radio" name="age" value="senior"> more than 60
+    </label>    
+  </form>  
+
+  <div id="elem">
+    <div id="elem-content">Element</div>
+  </div>
+
+  <ul>
+    <li>The</li>
+    <li>test</li>
+  </ul>
+  <ul>
+    <li>has</li>
+    <li>passed</li>
+  </ul>
+
+  <a href="http://example.com/file.zip">...</a>
+  <a href="http://ya.ru">...</a>
+
+
+  <h1>Contents</h1>
+
+  <div class="contents">
+    <ul class="book">
+      <li class="chapter">Chapter 1</li>
+      <li class="chapter">Chapter 2</li>
+    </ul>
+  </div>
+
+
+  <form name="my-form">
+    <div class="article">Article</div>
+    <div class="long article">Long article</div>
+  </form>
+
+  <script type="text/javascript">
+    let collection = document.body.children;
+
+    for(let elem of collection){
+      console.log(elem);  
+    }
+
+    let elemDiv = collection[0];
+    console.log(elemDiv);
+
+    let elemUl = collection[1];
+    console.log(elemUl);
+
+    let elemLiPete = elemUl.lastElementChild;
+    console.log(elemLiPete);
+
+
+    //Is it true that elem.lastChild.nextSibling is always null?
+    //Is it true that elem.children[0].previousSibling is always null ?
+
+    console.log(elemDiv.lastChild.nextSibling);
+
+    //console.log(elemDiv.children[0].previousSibling);
+
+    
+    //let td = table.rows[0].cells[1];
+    //td.style.backgroundColor = "red"; // highlight it
+
+    console.log(table.rows);
+
+    let i = 0;
+
+    let tableElement = document.getElementById('table');
+
+    //console.log(tableElement);
+
+    if (tableElement){
+      for(let row of tableElement.rows){
+        if (i >= row.cells.length) continue;
+
+        let td = row.cells[i];
+        if (td) td.style.backgroundColor = 'red';
+        
+        i++;
+      }      
+    }
+
+
+
+    let elements = document.querySelectorAll('ul > li:last-child');
+    //let elements = document.querySelectorAll('ul > li:first-child');
+
+    for (let elem of elements) {
+      console.log(elem.innerHTML); // "test", "passed"
+    }
+
+
+
+    // can be any collection instead of document.body.children
+    for (let elem of document.body.children) {
+      if (elem.matches('a[href$="zip"]')) {
+        console.log("The archive reference: " + elem.href );
+      }
+    }
+
+
+    let chapter = document.querySelector('.chapter'); // LI
+
+    console.log(chapter);
+
+    console.log(chapter.closest('.book')); // UL
+    console.log(chapter.closest('.contents')); // DIV
+
+    console.log(chapter.closest('h1')); // null (because h1 is not an ancestor)
+
+    //--
+
+    let inputs = table2.getElementsByTagName('input');
+
+    for (let input of inputs) {
+      console.log( input.value + ': ' + input.checked );
+    }
+
+
+    // find by name attribute
+    let form = document.getElementsByName('my-form')[0];
+
+    // find by class inside the form
+    let articles = form.getElementsByClassName('article');
+    console.log(articles.length); // 2, found two elements with class "article"
+
+
+    let tableAge = document.getElementById('age-table');
+    console.log(tableAge);
+
+    let labels = tableAge.querySelectorAll('label');
+    console.log(labels);
+
+    labels = document.querySelectorAll('#age-table label');
+    console.log(labels);
+
+    
+    let tdAge = tableAge.querySelector('td'); 
+    console.log(tdAge);
+
+    let form_search = document.querySelector('form[name="search"]');
+    console.log(form_search);
+
+    let first_input = form_search.querySelector('input');
+    console.dir(first_input);
+
+    inputs = form_search.querySelectorAll('input');
+    let last_input = inputs[inputs.length-1];
+    console.log(last_input.defaultValue);
+
+
+    console.log(form_search.tagName);
+
+  </script>
+
+</body>
+</html>

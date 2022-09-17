@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    #field {
+      width: 200px;
+      height: 150px;
+      border: 10px solid black;
+      background-color: #00FF00;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body style="height:2000px">
+
+  Click on a field to move the ball there.
+  <br> The ball should never leave the field.
+
+
+  <div id="field">
+    <img src="https://en.js.cx/clipart/ball.svg" id="ball"> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  </div>
+
+
+  <script type="text/javascript">
+
+    function getCoords(elem) {
+      let box = elem.getBoundingClientRect();
+
+      return {
+        top: box.top + window.pageYOffset,
+        right: box.right + window.pageXOffset,
+        bottom: box.bottom + window.pageYOffset,
+        left: box.left + window.pageXOffset
+      };
+    }    
+
+    let divField = document.querySelector('#field');
+    //divField.style.position = 'relative';
+    
+    let imgBall = document.querySelector('#ball');
+    imgBall.style.position = 'absolute';
+    imgBall.style.transition = '1s all';
+
+
+    function BootBall(clientX, clientY){
+      //console.log(document.documentElement.scrollTop);
+
+      let coordsField = getCoords(divField);
+
+      let rightRestriction = coordsField.left + divField.clientLeft + divField.clientWidth - imgBall.offsetWidth;
+      let leftResctriction = coordsField.left + divField.clientLeft;
+      let topRestriction = coordsField.top + divField.clientTop;
+      let bottomResctriction = coordsField.top + divField.clientTop + divField.clientHeight - imgBall.offsetHeight;
+
+      let left = clientX - imgBall.offsetWidth/2;
+      let top = clientY - imgBall.offsetHeight/2 +document.documentElement.scrollTop;
+      
+      left = left > rightRestriction ? rightRestriction : left;
+      left = left < leftResctriction ? leftResctriction : left;
+      top = top < topRestriction ? topRestriction : top;
+      top = top > bottomResctriction ? bottomResctriction : top;
+
+      imgBall.style.left = left + 'px';
+      imgBall.style.top = top + 'px';
+    }
+
+
+    divField.addEventListener('click', function(event){
+      //console.log(event);
+      let clientX = event.clientX;
+      let clientY = event.clientY;
+      
+      BootBall(clientX, clientY);
+    });
+  </script>
+
+  </body>
+</html>

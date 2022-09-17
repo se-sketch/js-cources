@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Apply JavaScript example</title>
+  </head>
+
+  <body data-about="Elephants">
+		    
+	  <!-- mark the div to show "name" here -->
+		<div show-info="name"></div>
+		<!-- and age here -->
+		<div show-info="age"></div>
+
+		<script>
+		  // the code finds an element with the mark and shows what's requested
+		  let user = {
+		    name: "Pete",
+		    age: 25
+		  };
+
+		  for(let div of document.querySelectorAll('[show-info]')) {
+		    // insert the corresponding info into the field
+		    let field = div.getAttribute('show-info');
+		    div.innerHTML = user[field]; // first Pete into "name", then 25 into "age"
+		  }
+		</script>
+
+
+		<style>
+		  /* styles rely on the custom attribute "order-state" */
+		  .order[order-state="new"] {
+		    color: green;
+		  }
+
+		  .order[order-state="pending"] {
+		    color: blue;
+		  }
+
+		  .order[order-state="canceled"] {
+		    color: red;
+		  }
+		</style>
+
+		<div class="order" order-state="new">
+		  A new order.
+		</div>
+
+		<div class="order" order-state="pending">
+		  A pending order.
+		</div>
+
+		<div class="order" order-state="canceled">
+		  A canceled order.
+		</div>		
+
+
+
+		<script type="text/javascript">
+			console.log(document.body.dataset.about); // Elephants
+		</script>
+
+
+		<style>
+		  .order[data-order-state="new"] {
+		    color: green;
+		  }
+
+		  .order[data-order-state="pending"] {
+		    color: blue;
+		  }
+
+		  .order[data-order-state="canceled"] {
+		    color: red;
+		  }
+		</style>
+
+		<div id="order" class="order" data-order-state="new">
+		  A new order.
+		</div>
+
+		<script>
+		  // read
+		  console.log(order.dataset.orderState); // new
+
+		  // modify
+		  order.dataset.orderState = "pending"; // (*)
+		</script>		
+
+
+	  <div data-widget-name="menu">Choose the genre</div>
+
+	  <script>
+	  	let element = document.querySelector('[data-widget-name]');
+	  	
+	  	console.log(element.dataset.widgetName);
+	  	console.dir(element.textContent);
+	  </script>		
+
+
+		<a name="list">the list</a>
+		<ul>
+		  <li><a href="http://google.com">http://google.com</a></li>
+		  <li><a href="/tutorial">/tutorial.html</a></li>
+		  <li><a href="local/path">local/path</a></li>
+		  <li><a href="ftp://ftp.com/my.zip">ftp://ftp.com/my.zip</a></li>
+		  <li><a href="http://nodejs.org">http://nodejs.org</a></li>
+		  <li><a href="http://internal.com/test">http://internal.com/test</a></li>
+		</ul>
+
+		<script>
+		  // setting style for a single link
+		  //let link = document.querySelector('a');
+		  //link.style.color = 'orange';
+
+		  let links = document.querySelectorAll('a[href]');
+		  for(let link of links) {
+		  	if (link.href.trim().startsWith('http://internal.com')) continue;
+		  	if (!link.getAttribute('href').trim().includes('://')) continue;
+
+		  	link.style.color = 'orange';
+		  }
+		  	
+		  //--------------  Способ 2
+
+		  /*
+			// look for all links that have :// in href
+			// but href doesn't start with http://internal.com
+			let selector = 'a[href*="://"]:not([href^="http://internal.com"])';
+			let links = document.querySelectorAll(selector);
+
+			links.forEach(link => link.style.color = 'orange');		  
+			*/
+
+		</script>
+
+  </body>
+</html>

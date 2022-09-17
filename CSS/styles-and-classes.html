@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Apply JavaScript example</title>
+
+     <style> body { color: red; margin: 5px } </style>
+
+  </head>
+
+	<body class="main page">
+	  <script>
+	    
+	    // add a class
+	    document.body.classList.add('article');
+
+	    console.log(document.body.className);
+
+	    console.log(document.body.classList);
+
+	    for (let name of document.body.classList) {
+	      console.log(name); 
+	    }	    
+
+
+			document.body.style.background = 'green';
+
+			setTimeout(() => document.body.style.removeProperty('background'), 1000);
+
+	  </script>
+
+		<div id="div">Button</div>
+
+		<script>
+		  // we can set special style flags like "important" here
+		  div.style.cssText=`color: red !important;
+		    background-color: yellow;
+		    width: 100px;
+		    text-align: center;
+		  `;
+
+		  console.log(div.style.cssText);
+		</script>		
+
+
+	  <script>
+	    let computedStyle = getComputedStyle(document.body);
+
+	    // now we can read the margin and the color from it
+
+	    console.log( computedStyle.marginTop ); // 5px
+	    console.log( computedStyle.color ); // rgb(255, 0, 0)
+
+	    //console.log(computedStyle);
+	  </script>
+
+
+		<style>
+		  body {
+		    margin: 10px;
+		  }
+		</style>
+		<script>
+		  let style = getComputedStyle(document.body);
+		  console.log(style.margin); // пустая строка в Firefox
+		</script>	  
+
+		
+
+
+
+		<script type="text/javascript">
+
+			function showNotification({top = 0, right = 0, className, html}){
+					let div = document.createElement('div');
+
+					div.style.top = top + 'px';
+					div.style.right = right + 'px';
+
+					div.innerHTML = html;
+
+					//div.classList.add('notification');
+					div.className = 'notification';
+
+					if (className) div.classList.toggle(className);
+
+					//console.log(div.classList);
+
+					document.body.append(div);
+
+					setTimeout(()=> div.remove() , 1500);
+			}
+
+
+			setInterval(() => {
+				// shows an element with the text "Hello" near the right-top of the window
+				showNotification({
+				  top: 10, // 10px from the top of the window (by default 0px)
+				  right: 10, // 10px from the right edge of the window (by default 0px)
+				  html: "Hello!", // the HTML of notification
+				  className: "welcome" // an additional class for the div (optional)
+				});
+			}, 2000);
+
+		</script>
+
+
+	</body>
+
+</html>

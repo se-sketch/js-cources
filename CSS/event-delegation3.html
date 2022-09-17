@@ -1,0 +1,215 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <style>
+    body {
+      height: 2000px;
+      /* make body scrollable, the tooltip should work after the scroll */
+    }
+
+    .tooltip {
+      position: fixed;
+      padding: 10px 20px;
+      border: 1px solid #b3c9ce;
+      border-radius: 4px;
+      text-align: center;
+      font: italic 14px/1.3 sans-serif;
+      color: #333;
+      background: #fff;
+      box-shadow: 3px 3px 3px rgba(0, 0, 0, .3);
+    }
+  </style>
+
+</head>
+<body>
+
+  <ul class="tree" id="tree">
+    <li>Animals
+      <ul>
+        <li>Mammals
+          <ul>
+            <li>Cows</li>
+            <li>Donkeys</li>
+            <li>Dogs</li>
+            <li>Tigers</li>
+          </ul>
+        </li>
+        <li>Other
+          <ul>
+            <li>Snakes</li>
+            <li>Birds</li>
+            <li>Lizards</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Fishes
+      <ul>
+        <li>Aquarium
+          <ul>
+            <li>Guppy</li>
+            <li>Angelfish</li>
+          </ul>
+        </li>
+        <li>Sea
+          <ul>
+            <li>Sea trout</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+
+  <script type="text/javascript">
+
+    let listLi = tree.querySelectorAll('li');
+
+    for (let li of listLi) {
+      let span = document.createElement('span');
+      li.prepend(span);
+      span.append(span.nextSibling);
+    }
+
+    
+    tree.addEventListener('click', (event) => {
+      //console.log(event.target.tagName);
+
+      if (event.target.tagName != 'SPAN') return;
+
+      let childrenContainer = event.target.parentNode.querySelector('ul');
+      if (!childrenContainer) return;
+      childrenContainer.hidden = !childrenContainer.hidden;
+    });
+    
+  </script>
+
+  <hr>
+
+
+  <table id="grid">
+    <thead>
+      <tr>
+        <th data-type="number">Age</th>
+        <th data-type="string">Name</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <tr>
+        <td>5</td>
+        <td>John</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Pete</td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td>Ann</td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>Eugene</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Ilya</td>
+      </tr>
+    </tbody>
+
+  </table>  
+
+
+  <script type="text/javascript">
+
+    function SortingTable(table, cellIndex, dataType){
+
+      let listTr = table.querySelectorAll('tbody tr');
+
+      let arr = Array.from(listTr).sort((tra, trb) => {
+        let a = tra.cells[cellIndex].textContent;
+        let b = trb.cells[cellIndex].textContent;
+
+        if (dataType == 'number') return Number(a) - Number(b);
+          
+        return (a > b) ? 1 : -1;
+      });
+
+      table.querySelector('tbody').append(...arr);
+    }
+    
+    grid.addEventListener('click', (event) => {
+      
+      if (event.target.tagName != 'TH')  return;
+
+      let cellIndex = event.target.cellIndex;
+      let dataType = event.target.dataset.type;
+
+      SortingTable(grid, cellIndex, dataType);
+    });
+
+  </script>
+
+
+  <hr>
+
+  <p>LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa</p>
+  <p>LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa</p>
+
+
+  <button data-tooltip="the tooltip is longer than the element">Short button</button>
+  <button data-tooltip="HTML<br>tooltip">One more button</button>  
+
+  <script type="text/javascript">
+    
+    let tooltipElem;
+
+    document.addEventListener('mouseover', (event) => {
+
+      let target = event.target;
+      let tooltip = target.dataset.tooltip;
+      if (!tooltip) return;
+
+      tooltipElem = document.createElement('div');
+      tooltipElem.className = 'tooltip';
+      tooltipElem.innerHTML = tooltip;
+      document.body.append(tooltipElem);
+
+      //console.dir(tooltip);
+
+      let coords = target.getBoundingClientRect();
+
+      let left = coords.left + target.offsetWidth/2 - tooltipElem.offsetWidth/2;
+      let top = coords.top - 5 - tooltipElem.offsetHeight;
+
+      //console.log(left);
+
+      left = left < 5 ? 5 : left;
+      top = top < 0 ? coords.top + target.offsetHeight + 5 : top;
+
+
+      tooltipElem.style.left = left + 'px';
+      tooltipElem.style.top = top + 'px';
+
+    });
+
+    document.addEventListener('mouseout', (event) => {
+      //let tooltip = event.target.dataset.tooltip;
+      if (!tooltipElem) return;
+
+      tooltipElem.remove();
+      tooltipElem = null;
+    });
+
+
+  </script>
+
+  <hr>
+
+  <br>
+
+</body>
+</html>
