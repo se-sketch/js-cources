@@ -1,0 +1,154 @@
+<html>
+
+<body>
+  <p>A paragraph</p>
+
+  <script>
+    console.log( document.body.innerHTML ); // read the current contents
+    document.body.innerHTML = 'The new BODY!'; // replace it
+  </script>
+
+
+  <script>
+    document.body.innerHTML = '<b>test'; // forgot to close the tag
+    console.log( document.body.innerHTML ); // <b>test</b> (fixed)
+  </script>
+
+
+
+  	<div>Hello, world!</div>
+
+	<script>
+	  	let div = document.querySelector('div');
+
+	  	// replace div.outerHTML with <p>...</p>
+	  	div.outerHTML = '<p>A new element</p>'; // (*)
+
+	  	// Wow! 'div' is still the same!
+	  	console.log(div.outerHTML); // <div>Hello, world!</div> (**)
+	</script>
+
+
+	<div id="news">
+	  <h1>Headline!</h1>
+	  <p>Martians attack people!</p>
+	</div>
+
+	<script>
+	  // Headline! Martians attack people!
+	   console.log(news.textContent);
+	</script>	
+
+
+	<div id="elem1"></div>
+	<div id="elem2"></div>
+
+	<script>
+	  	//let name = prompt("What's your name?", "<b>Winnie-the-Pooh!</b>");
+	  	let name = "<b>Winnie-the-Pooh!</b>";
+
+	  	elem1.innerHTML = name;
+	  	elem2.textContent = name;
+	</script>
+
+
+	<div>Both divs below are hidden</div>
+
+	<div hidden>With the attribute "hidden"</div>
+
+	<div id="elem">JavaScript assigned the property "hidden"</div>
+
+	<script>
+	  elem.hidden = true;
+	</script>
+
+	
+	<div id="elementdiv">A blinking element</div>
+
+	<script>
+	  setInterval(() => elementdiv.hidden = !elementdiv.hidden, 1000);
+	</script>	
+
+	<input type="text" id="elementinput" value="value">
+
+	<script>
+	  	console.log(elementinput.type); // "text"
+	  	console.log(elementinput.id); // "elem"
+	  	console.log(elementinput.value); // value
+	  	console.log(elementinput);
+	  	console.dir(elementinput);
+	</script>
+
+	
+	<ul>
+		<li>
+			Animals
+			<ul>
+				<li>
+					Mammals
+
+					<ul>
+						<li>Cows</li>
+						<li>Donkeys</li>
+						<li>Dogs</li>
+						<li>Tigers</li>
+					</ul>
+				</li>
+				
+				<li>
+					Other
+
+					<ul>
+						<li>Snakes</li>
+						<li>Birds</li>
+						<li>Lizards</li>
+					</ul>
+				</li>
+			</ul>			
+		</li>
+		<li>
+			Fishes
+			<ul>
+				<li>
+					Aquarium
+					<ul>
+						<li>Guppy</li>
+						<li>Angelfish</li>
+					</ul>
+				</li>
+				<li>
+					Sea
+					<ul>
+						<li>Sea trout</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+
+	<script type="text/javascript">
+
+		let elements_li = document.querySelectorAll('li');
+
+		for(let li of elements_li){
+			console.log(li.firstChild.data.trim());
+		}
+
+		console.log(elements_li.length);
+	</script>
+
+
+  	<script>
+    	console.log(document.body.lastChild.nodeType);
+  	</script>
+
+
+  	<script type="text/javascript">
+		console.log(HTMLDocument.prototype.constructor.name); // HTMLDocument
+		console.log(HTMLDocument.prototype.__proto__.constructor.name); // Document
+		console.log(HTMLDocument.prototype.__proto__.__proto__.constructor.name); // Node
+	</script>
+
+</body>
+
+</html>

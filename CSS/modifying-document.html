@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Apply JavaScript example</title>
+  </head>
+
+  <body>
+
+		<style>
+		.alert {
+		  padding: 15px;
+		  border: 1px solid #d6e9c6;
+		  border-radius: 4px;
+		  color: #3c763d;
+		  background-color: #dff0d8;
+		}
+		</style>
+
+		<div class="alert">
+		  <strong>Hi there!</strong> You've read an important message.
+		</div>  	
+
+		
+		<script type="text/javascript">
+				/*
+				let div = document.createElement('div');
+
+				let textNode = document.createTextNode('Here I am');
+				*/
+
+
+				// 1. Create <div> element
+				let div = document.createElement('div');
+
+				// 2. Set its class to "alert"
+				div.className = "alert";
+
+				// 3. Fill it with the content
+				div.innerHTML = "<strong>Hi there!</strong> You've read an important message.";
+
+  			document.body.append(div);
+
+		</script>
+
+
+		<ol id="ol">
+		  <li>0</li>
+		  <li>1</li>
+		  <li>2</li>
+		</ol>
+
+		<script>
+		  ol.before('before'); // insert string "before" before <ol>
+		  ol.after('after'); // insert string "after" after <ol>
+
+		  let liFirst = document.createElement('li');
+		  liFirst.innerHTML = 'prepend';
+		  ol.prepend(liFirst); // insert liFirst at the beginning of <ol>
+
+		  let liLast = document.createElement('li');
+		  liLast.innerHTML = 'append';
+		  ol.append(liLast); // insert liLast at the end of <ol>
+		</script>
+
+
+		<div id="div"></div>
+		<script>
+		  div.before('<p>Hello</p>', document.createElement('hr'));
+		</script>		
+
+
+		<div id="div"></div>
+		<script>
+		  div.insertAdjacentHTML('beforebegin', '<p>Hello</p>');
+		  div.insertAdjacentHTML('afterend', '<p>Bye</p>');
+		</script>		
+
+
+		<script>
+		  document.body.insertAdjacentHTML("afterbegin", `<div class="alert">
+		    <strong>Hi there!</strong> You've read an important message.
+		  </div>`);
+		</script>		
+
+
+		<script>
+		  div = document.createElement('div');
+		  div.className = "alert";
+		  div.innerHTML = "<strong>Hi there!</strong> You've read an important message.";
+
+		  document.body.append(div);
+		  setTimeout(() => div.remove(), 1000);
+		</script>		
+
+	
+		<div id="first">First</div>
+		<div id="second">Second</div>
+		<script>
+		  // no need to call remove
+		  second.after(first); // take #second and after it insert #first
+		</script>
+
+
+		<div class="alert" id="divdiv">
+		  <strong>Hi there!</strong> You've read an important message.
+		</div>
+
+		<script>
+		  let div2 = divdiv.cloneNode(true); // clone the message
+		  div2.querySelector('strong').innerHTML = 'Bye there!'; // change the clone
+
+		  divdiv.after(div2); // show the clone after the existing div
+		</script>
+ 	
+
+		<ul id="ul"></ul>
+
+		<script>
+		function getListContent() {
+		  let fragment = new DocumentFragment();
+
+		  for(let i=1; i<=3; i++) {
+		    let li = document.createElement('li');
+		    li.append(i);
+		    fragment.append(li);
+		  }
+
+		  return fragment;
+		}
+
+		ul.append(getListContent()); // (*)
+		</script>
+
+
+		<p>Somewhere in the page...</p>
+		<script>
+		  //document.write('<b>Hello from JS</b>');
+		</script>
+		<p>The end</p>		
+
+
+		<div id="elem1"></div>
+		<div id="elem2"></div>
+		<div id="elem3"></div>
+		<script>
+		  let text = '<b>text</b>';
+
+		  elem1.append(document.createTextNode(text));
+		  elem2.innerHTML = text;
+		  elem3.textContent = text;
+		</script>		
+
+
+		<ol id="elem">
+		  <li>Hello</li>
+		  <li>World</li>
+		</ol>
+
+		<script>
+		  function clear(elem) { 
+		  	elem.innerHTML = '';
+			}
+
+		  clear(elem); // clears the list
+		</script>		
+
+
+		<ul id = 'ulul'>
+		</ul>
+
+		<script type="text/javascript">
+			while(true){
+				//let text = prompt('please enter text content', '');
+				let text = '';
+
+				if (text == null || text.trim() == '') break;
+
+				let li = document.createElement('li');
+				li.textContent = text;
+				ulul.append(li);
+			}
+		</script>
+
+		<hr>
+
+		<div id='containerTree'>
+		</div>
+
+		<script type="text/javascript">
+			let data = {
+			  "Fish": {
+			    "trout": {},
+			    "salmon": {}
+			  },
+
+			  "Tree": {
+			    "Huge": {
+			      "sequoia": {},
+			      "oak": {}
+			    },
+			    "Flowering": {
+			      "apple tree": {},
+			      "magnolia": {}
+			    }
+			  }
+			};
+
+			function countDescendants(data){
+				let kvo = Object.keys(data).length;
+
+				for(let [key, value] of Object.entries(data)) kvo += countDescendants(value);
+				
+				return kvo;
+			}
+
+			function createTree(container, data){
+				let fragment = new DocumentFragment();
+
+				for(let [key, value] of Object.entries(data)){
+
+						let kvo = countDescendants(value);
+						let textKvo = '';
+						if (kvo > 0) textKvo = ' ['+kvo+']';
+						
+						let li = document.createElement('li');
+						li.textContent = `${key} ${textKvo}`;
+						fragment.append(li);
+
+						if (Object.keys(value).length == 0) continue;
+
+						let ul = document.createElement('ul');
+						li.append(ul);
+						createTree(ul, value);
+				}
+
+				container.append(fragment);
+			}
+
+
+			let container = document.getElementById('containerTree');
+
+			let ul = document.createElement('ul');
+			container.append(ul);
+
+			createTree(ul, data); // creates the tree in the container
+
+
+			let kvo = countDescendants(data);
+			//console.log(kvo);
+		</script>
+ 	   
+
+		<hr>
+	
+
+		<div id="calendar">
+		</div>
+
+	  <style>
+	    table {
+	      border-collapse: collapse;
+	    }
+
+	    td, th {
+	      border: 1px solid black;
+	      padding: 3px;
+	      text-align: center;
+	    }
+
+	    th {
+	      font-weight: bold;
+	      background-color: #E6E6E6;
+	    }
+	  </style>
+
+		<script type="text/javascript">
+
+			function createRow(data, flagTitle){
+				let tr = document.createElement('tr');
+				let nameTd = flagTitle ? 'th' : 'td';
+
+				for(let i = 0; i < 7; i++){
+					let td = document.createElement(nameTd);
+					td.textContent = data[i];
+					tr.append(td);
+				}
+				return tr;
+			}
+
+			function createCalendar(elem, year, month){
+
+				const nameMonthes = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+				let date = new Date(year, month);
+
+				let elementH2 = document.createElement('h2');
+				elementH2.textContent = nameMonthes[date.getMonth()] +' '+ year;
+				elem.append(elementH2);
+
+				let table = document.createElement('table');
+				elem.append(table);
+
+				let data = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'];
+
+				let tr = createRow(data, true);
+				table.append(tr);
+
+				let maxDate = new Date(year, month + 1, 0).getDate();
+
+				data = ['', '', '', '', '', '', ''];
+
+				for(i = 1; i <= maxDate; i++){
+
+					date = new Date(year, month, i);
+
+					let day = date.getDay(); 
+
+					if (day == 0){
+						data[6] = i; 
+					} else{
+						data[day-1] = i;
+					} 
+
+					if (day == 0 || i == maxDate){
+						tr = createRow(data, false);
+						table.append(tr);
+						data = ['', '', '', '', '', '', ''];
+					}
+				}
+			}
+
+			let elemCalendar = document.querySelector('#calendar');
+
+			createCalendar(elemCalendar, 2022, 8);
+		</script>
+
+		<hr>
+
+		<style type="text/css">
+			.clock[data-clock-state = "hour"]{
+				color: red;
+			}
+			.clock[data-clock-state = "minute"]{
+				color: green;
+			}
+			.clock[data-clock-state = "second"]{
+				color: blue;
+			}
+		</style>
+
+		<div>
+			<span id="clockHours" class="clock" data-clock-state="hour">00</span>:
+			<span id="clockMinutes" class="clock" data-clock-state="minute">00</span>:
+			<span id="clockSeconds" class="clock" data-clock-state="second">00</span>
+		</div>
+
+		<button id="buttonStart">Start</button>
+
+		<button id="buttonStop">Stop</button>
+
+		<script type="text/javascript">
+
+			let timerId;
+			
+			function ClockUpdate(){
+					let date = new Date();
+					let hours = date.getHours();
+					hours = hours < 10 ? '0'+hours : hours;
+
+					let minutes = date.getMinutes();
+					minutes = minutes < 10 ? '0'+minutes : minutes;
+
+					let seconds = date.getSeconds();
+					seconds = seconds < 10 ? '0'+seconds : seconds;
+
+					let elementHours = document.querySelector('.clock[data-clock-state="hour"]');
+					elementHours.innerHTML = hours;
+					
+					let elementMinutes = document.querySelector('.clock[data-clock-state="minute"]');
+					elementMinutes.innerHTML = minutes;
+
+					let elementSeconds = document.querySelector('.clock[data-clock-state="second"]');
+					elementSeconds.innerHTML = seconds;
+			}
+
+			function StartClock(){
+					if (timerId) return;
+
+					ClockUpdate();
+					timerId = setInterval(ClockUpdate, 1000);
+			}
+
+			function StopClock(){
+				clearInterval(timerId); 
+				timerId = null;
+			}
+
+			let btnStart = document.getElementById('buttonStart');
+			btnStart.addEventListener('click', StartClock);
+
+			let btnStop = document.getElementById('buttonStop');
+			btnStop.addEventListener('click', StopClock);
+
+		</script>
+
+		<hr>
+
+
+		<ul id="ul2">
+		  <li id="one">1</li>
+		  <li id="two">4</li>
+		</ul>		
+
+		<script type="text/javascript">
+			
+			let strText = '<li>2</li><li>3</li>';
+
+			let liOne = document.querySelector('#one');
+
+			//console.log(liOne);
+
+			liOne.insertAdjacentHTML('afterend', strText);
+
+		</script>
+
+
+		<hr>
+
+		<table id="sortTable">
+			<thead>
+			  <tr>
+			    <th>Name</th><th>Surname</th><th>Age</th>
+			  </tr>
+			</thead>
+			
+			<tbody>
+			  <tr>
+			    <td>John</td><td>Smith</td><td>10</td>
+			  </tr>
+			  <tr>
+			    <td>Pete</td><td>Brown</td><td>15</td>
+			  </tr>
+			  <tr>
+			    <td>Ann</td><td>Lee</td><td>5</td>
+			  </tr>
+			  <tr>
+			    <td>...</td><td>...</td><td>...</td>
+			  </tr>
+			</tbody>
+		</table>
+
+		<script type="text/javascript">
+
+			function TableSorting(table, numCol){
+				//let tbody = table.querySelector('tbody');
+				let tbody = table.tBodies[0];
+
+				let sortedRows = Array.from(tbody.rows).sort((tra, trb) => 
+					tra.cells[0].innerHTML.localeCompare(trb.cells[0].innerHTML)
+				);
+
+				tbody.append(...sortedRows);
+			}
+
+
+			let table = document.querySelector('#sortTable');
+
+			TableSorting(table, 1);
+
+			/*
+			let sortedRows = Array.from(table.tBodies[0].rows)
+		  	.sort((rowA, rowB) => rowA.cells[0].innerHTML.localeCompare(rowB.cells[0].innerHTML));
+
+			table.tBodies[0].append(...sortedRows);
+			*/
+
+		</script>
+
+		<hr>
+
+
+	
+ 	</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Apply JavaScript example</title>
+  </head>
+  <body>
+
+	<form id="formElem">
+	  <input type="text" name="name" value="John">
+	  <input type="text" name="surname" value="Smith">
+	  <input type="submit">
+	</form>
+
+	<script>
+
+		
+
+	  formElem.onsubmit = async (e) => {
+	    e.preventDefault();
+
+	    let formData = new FormData(formElem);
+
+	    console.log(formData);
+
+	    //let url = 'https://learn.javascript.ru/formdata';
+	    let url = 'https://learn.javascript.ru/article/formdata/post/user';
+
+	    //let response = await fetch('/article/formdata/post/user', {
+	    let response = await fetch(url, {
+	      method: 'POST',
+	      body: new FormData(formElem)
+	    });
+
+	    let result = await response.json();
+
+	    console.log(result.message);
+	  };
+	</script>
+
+  </body>
+</html>

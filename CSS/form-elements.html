@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Apply JavaScript example</title>
+	
+
+  </head>
+
+  <body>
+
+			<hr>
+
+			  <form id="form">
+			    <fieldset name="userFields">
+			      <legend>info</legend>
+			      <input name="login" type="text">
+			    </fieldset>
+			  </form>
+
+			  <script>
+			    console.log(form.elements.login); // <input name="login">
+
+			    console.log(form.elements);
+
+			    console.log(document.forms.form.elements.login);
+
+			    let fieldset = form.elements.userFields;
+			    console.log(fieldset); // HTMLFieldSetElement
+
+			    // we can get the input by name both from the form and from the fieldset
+			    console.log(fieldset.elements.login == form.elements.login); // true
+			    
+			  </script>			
+
+			  <hr>
+
+			  <hr>
+
+					<select id="select" multiple>
+					  <option value="blues" selected>Blues</option>
+					  <option value="rock" selected>Rock</option>
+					  <option value="classic">Classic</option>
+					</select>
+
+					<script>
+					  // get all selected values from multi-select
+					  let selected = Array.from(select.options)
+					    .filter(option => option.selected)
+					    .map(option => option.value);
+
+					  console.log(selected); // blues,rock
+					</script>
+
+
+				<hr>
+
+					<select id="genres">
+					  <option value="rock">Rock</option>
+					  <option value="blues" selected>Blues</option>
+					</select>				
+
+					<script type="text/javascript">
+						let selectedOprion = genres.options[genres.selectedIndex];
+
+						if (selectedOprion){
+							console.log(selectedOprion.value);
+							console.log(selectedOprion.text);
+						}
+
+						let option = new Option("Classic", "classic");
+						genres.append(option);
+
+						option.selected = true;
+					</script>
+
+  </body>
+</html>

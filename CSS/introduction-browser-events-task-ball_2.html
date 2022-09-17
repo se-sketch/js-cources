@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    #field {
+      width: 200px;
+      height: 150px;
+      border: 10px solid black;
+      background-color: #00FF00;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body style="height:2000px">
+
+  Click on a field to move the ball there.
+  <br> The ball should never leave the field.
+
+
+  <div id="field">
+    <img src="https://en.js.cx/clipart/ball.svg" id="ball"> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  </div>
+
+
+  <script type="text/javascript">
+    /*
+    function getCoords(elem) {
+      let box = elem.getBoundingClientRect();
+
+      return {
+        top: box.top + window.pageYOffset,
+        right: box.right + window.pageXOffset,
+        bottom: box.bottom + window.pageYOffset,
+        left: box.left + window.pageXOffset
+      };
+    } 
+    */   
+
+    let divField = document.querySelector('#field');
+    divField.style.position = 'relative';
+    
+    let imgBall = document.querySelector('#ball');
+    imgBall.style.position = 'absolute';
+    imgBall.style.transition = '1s all';
+    imgBall.style.left = 0;
+    imgBall.style.top = 0;
+
+
+    function BootBall(clientX, clientY){
+      //let coordsField = getCoords(divField);
+      let coordsField = divField.getBoundingClientRect();
+
+      let left = clientX - coordsField.left - divField.clientLeft - imgBall.offsetWidth/2;
+      let top = clientY - coordsField.top - divField.clientTop - imgBall.offsetHeight/2;
+
+      let bottomResctriction = divField.clientHeight - imgBall.offsetHeight;
+      let rightRestriction = divField.clientWidth - imgBall.offsetWidth;
+
+      left = left < 0 ? 0 : left;
+      left = left > rightRestriction ? rightRestriction : left;
+
+      top = top < 0 ? 0 : top;
+      top = top > bottomResctriction ? bottomResctriction : top;
+
+      imgBall.style.left = left + 'px';
+      imgBall.style.top = top + 'px';
+    }
+
+
+    divField.addEventListener('click', function(event){
+      let clientX = event.clientX;
+      let clientY = event.clientY;
+      
+      BootBall(clientX, clientY);
+    });
+  </script>
+
+  </body>
+</html>

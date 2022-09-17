@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Apply JavaScript example</title>
+	
+  </head>
+
+  <body>
+
+		<h1 id="elem">Hello for John!</h1>
+
+		<script>
+		  // additional details come with the event to the handler
+		  elem.addEventListener("hello", function(event) {
+		    console.log(event.detail.name);
+		  });
+
+		  elem.dispatchEvent(new CustomEvent("hello", {
+		    detail: { name: "John" }
+		  }));
+		</script>
+
+
+		<hr>
+
+
+			<pre id="rabbit">
+			  |\   /|
+			   \|_|/
+			   /. .\
+			  =\_Y_/=
+			   {>o<}
+			</pre>
+			<button onclick="hide()">Hide()</button>
+
+			<script>
+			  function hide() {
+			    let event = new CustomEvent("hide", {
+			      cancelable: true // without that flag preventDefault doesn't work
+			    });
+			    if (!rabbit.dispatchEvent(event)) {
+			      console.log('The action was prevented by a handler');
+			    } else {
+			      rabbit.hidden = true;
+			    }
+			  }
+
+			  rabbit.addEventListener('hide', function(event) {
+			    if (confirm("Call preventDefault?")) {
+			      event.preventDefault();
+			    }
+			  });
+			</script>
+
+			<hr>
+
+				<button id="menu">Menu (click me)</button>
+
+				<script>
+				  menu.onclick = function() {
+				    console.log(1);
+
+				    setTimeout(() => menu.dispatchEvent(new CustomEvent("menu-open", {
+				      bubbles: true
+				    })));
+
+				    console.log(2);
+				  };
+
+				  document.addEventListener('menu-open', () => console.log('nested'));
+				</script>	
+
+			<hr>
+
+
+  </body>
+</html>

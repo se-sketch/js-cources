@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Apply JavaScript example</title>
+	
+  </head>
+
+  <body>
+    
+			<style>
+			  #example {
+			    width: 300px;
+			    height: 200px;
+			    border: 25px solid #E8C48F;
+			    padding: 20px;
+			    overflow: auto;
+			  }
+			</style>
+
+
+			<main style="position: relative" id="main">
+			  <article>
+			    <div id="example" style="position: absolute; left: 180px; top: 100px">
+			    	...
+Introduction This Ecma Standard is based on several originating technologies, the most well known being JavaScript (Netscape) and JScript (Microsoft). The language was invented by Brendan Eich at Netscape and first appeared in that company’s Navigator 2.0 browser. It has appeared in all subsequent browsers from Netscape and in all browsers from Microsoft starting with Internet Explorer 3.0. The development of this Standard started in November 1996. The first edition of this Ecma Standard was adopted by the Ecma General Assembly of June 1997. That Ecma Standard was submitted to ISO/ IEC JTC 1 for adoption under the fast-track procedure, and approved as international standard ISO/IEC 16262, in April 1998. The Ecma General Assembly of June 1998 approved the second edition of ECMA-262 to keep it fully aligned with ISO/IEC 16262. Changes between the first and the second edition are editorial in nature.			    	
+			    </div>
+			  </article>
+			</main>
+			<script>
+				console.log('offsetParent ' + example.offsetParent);
+			  console.log('offsetParent.id ' + example.offsetParent.id); // main
+			  console.log('offsetLeft ' + example.offsetLeft); // 180 (note: a number, not a string "180px")
+			  console.log('offsetTop ' + example.offsetTop); // 180
+			  console.log('clientWidth ' + example.clientWidth);
+			  console.log('offsetWidth ' + example.offsetWidth);
+			  //console.log('clientLeft ' + example.clientLeft);
+			  //console.log('clientRight ' + example.clientRight);
+
+			  console.log('clientHeight ' + example.clientHeight);
+			  console.log('offsetHeight ' + example.offsetHeight);
+			  console.log('scrollHeight ' + example.scrollHeight);
+			  //console.log(' ' + example.);
+			  //console.log(' ' + example.);
+			  //console.log(' ' + example.);
+			</script>			
+
+			<hr>
+
+			<script type="text/javascript">
+					// создадим элемент с прокруткой
+					let div = document.createElement('div');
+
+					div.style.overflowY = 'scroll';
+					div.style.width = '50px';
+					div.style.height = '50px';
+
+					// мы должны вставить элемент в документ, иначе размеры будут равны 0
+					document.body.append(div);
+					let scrollWidth = div.offsetWidth - div.clientWidth;
+
+					div.remove();
+
+					//console.log(scrollWidth);
+				</script>
+
+				<script type="text/javascript">
+					let elem = document.querySelector('#example');
+					let scrollBottom = elem.scrollHeight - elem.scrollTop - elem.clientHeight;
+					console.log(scrollBottom);
+				</script>
+
+				<script type="text/javascript">
+					
+					div = document.createElement('div');
+
+					div.style.width = '50px';
+					div.style.height = '50px';
+					div.style.overflowY = 'scroll';
+
+					document.body.append(div);
+
+					scrollWidth = div.offsetWidth - div.clientWidth;
+					console.log(scrollWidth);
+
+					div.remove();
+
+				</script>
+
+				<hr>
+
+				<style type="text/css">
+					.ramka{
+						width: 500px;
+						height: 400px;
+						background-color: green;
+						border: 10px solid black;
+						position: relative;
+						top: 400px;
+					}
+
+					#ball{
+						position: absolute;
+						width: 40px;
+						height:  40px;
+					}
+				</style>
+
+				<div class="ramka">
+					<img src="ball.png" id="ball">	
+				</div>
+
+				<script type="text/javascript">
+					let divRamka = document.querySelector('.ramka');
+					let ball = document.querySelector('#ball');
+
+					ball.style.left = Math.round(divRamka.clientWidth / 2 - ball.offsetWidth / 2 ) + 'px';
+					ball.style.top = Math.round(divRamka.clientHeight / 2 - ball.offsetHeight / 2) + 'px';
+				</script>
+				
+				<hr>
+
+				<button id="buttonscroll" style="margin-top: 400px">window.scrollBy(0, 10);</button>
+
+				<hr>
+				<div style="width: 100px; height: 200px; background-color: blue;"></div>
+				<hr>
+
+				<script type="text/javascript">
+					console.log(document.documentElement.clientHeight);	
+					console.log(document.documentElement.clientWidth);	
+
+					let buttonscroll = document.querySelector('#buttonscroll');
+					buttonscroll.addEventListener('click', ()=>{
+						window.scrollBy(0, 10);
+					});
+				</script>
+
+
+				<button id="buttonscrollTo">window.scrollTo(0, 200);</button>
+
+				<script type="text/javascript">
+					let buttonscrollTo = document.querySelector('#buttonscrollTo');
+					buttonscrollTo.addEventListener('click', ()=>{
+						window.scrollTo(0, 200);
+					});
+				</script>
+
+				<script type="text/javascript">
+					//document.body.style.overflow = "hidden";
+				</script>
+
+
+				<hr>
+
+				<button onclick="console.log(this.getBoundingClientRect())">getBoundingClientRect</button>
+
+				<br>
+
+				<hr>
+
+				<button id="coords-show-mark">coords-show-mark</button>
+
+				<script type="text/javascript">
+					
+					elem = document.getElementById("coords-show-mark");
+
+					/*
+					function createMessageUnder(elem, html) {
+
+						console.log(elem);
+					  // create message element
+					  let message = document.createElement('div');
+					  // better to use a css class for the style here
+					  message.style.cssText = "position:fixed; color: red";
+
+					  // assign coordinates, don't forget "px"!
+					  let coords = elem.getBoundingClientRect();
+
+					  console.log(coords);
+
+					  message.style.left = coords.left + "px";
+					  message.style.top = coords.bottom + "px";
+
+					  message.innerHTML = html;
+
+					  return message;
+					}
+					*/
+			
+					/*
+					// Usage:
+					// add it for 5 seconds in the document
+					let message = createMessageUnder(elem, 'Hello, world!');
+					document.body.append(message);
+					//setTimeout(() => message.remove(), 5000);				
+					*/
+
+					</script>
+
+				<hr>
+
+				<script type="text/javascript">
+					// get document coordinates of the element
+					function getCoords(elem) {
+					  let box = elem.getBoundingClientRect();
+
+					  return {
+					    top: box.top + window.pageYOffset,
+					    right: box.right + window.pageXOffset,
+					    bottom: box.bottom + window.pageYOffset,
+					    left: box.left + window.pageXOffset
+					  };
+					}
+
+					let coords = getCoords(elem);
+					console.log(coords);
+				</script>
+
+				<script type="text/javascript">
+
+					function createMessageUnder(elem, html) {
+					  let message = document.createElement('div');
+					  message.style.cssText = "position:absolute; color: red";
+
+					  let coords = getCoords(elem);
+
+					  message.style.left = coords.left + "px";
+					  message.style.top = coords.bottom + "px";
+
+					  message.innerHTML = html;
+
+					  return message;
+					}							
+
+					// Usage:
+					// add it for 5 seconds in the document
+					let message = createMessageUnder(elem, 'Hello, world!');
+					document.body.append(message);
+					//setTimeout(() => message.remove(), 5000);			
+										
+				</script>
+
+  </body>
+</html>

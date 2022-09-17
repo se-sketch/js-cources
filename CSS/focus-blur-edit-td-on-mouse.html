@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    #mouse {
+      display: inline-block;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    #mouse:focus {
+      outline: 1px dashed black;
+    }
+  </style>
+</head>
+
+<body>
+
+  <p>Click on the mouse and move it with arrow keys.</p>
+
+  <pre id="mouse">
+ _   _
+(q\_/p)
+ /. .\
+=\_t_/=   __
+ /   \   (
+((   ))   )
+/\) (/\  /
+\  Y  /-'
+ nn^nn
+</pre>
+
+
+  <script>
+    
+    mouse.tabIndex = 0;
+
+    mouse.addEventListener('click', (event) => {
+      mouse.style.left = mouse.getBoundingClientRect().left + 'px';
+      mouse.style.top = mouse.getBoundingClientRect().top + 'px';
+
+      mouse.style.position = 'fixed';
+    });
+
+    mouse.addEventListener('keydown', (event) => {
+      switch(event.key){
+        case 'ArrowLeft':
+          mouse.style.left = parseInt(mouse.style.left) - mouse.offsetWidth + 'px';
+          break;
+        case 'ArrowUp' :
+          mouse.style.top = parseInt(mouse.style.top) - mouse.offsetHeight + 'px';
+          break;
+        case 'ArrowRight' : 
+          mouse.style.left = parseInt(mouse.style.left) + mouse.offsetWidth + 'px';
+          break;
+        case 'ArrowDown' : 
+          mouse.style.top = parseInt(mouse.style.top) + mouse.offsetHeight + 'px';
+          break;
+      }
+    });
+
+  </script>
+
+</body>
+
+</html>

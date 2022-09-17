@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Apply JavaScript example</title>
+
+		<script type="text/javascript">
+			// this way it works
+			document.addEventListener("DOMContentLoaded", function() {
+			  console.log("DOM built");
+			});
+		</script>
+
+  </head>
+
+  <body>
+    
+    <button id="buttonClickMe">buttonClickMe</button>
+
+    <input value="Click me" onclick="alert('Click!')" type="button">
+
+
+		<script>
+		  function countRabbits() {
+		    for(let i=1; i<=3; i++) {
+		      console.log("Rabbit number " + i);
+		    }
+		  }
+		</script>
+
+		<input type="button" onclick="countRabbits()" value="Count rabbits!">
+
+		<hr>
+
+		<input type="button" value="event information" id="elem">
+
+		<script>
+		  elem.onclick = function(event) {
+		    // show event type, element and coordinates of the click
+		    console.log(event.type + " at " + event.currentTarget);
+		    console.log("Coordinates: " + event.clientX + ":" + event.clientY);
+		    console.log(event);
+		  };
+		</script>
+
+		<hr>
+
+		<button id="elem2">Click me</button>
+
+		<script>
+		  let obj = {
+		    handleEvent(event) {
+		      console.log(event.type + " at " + event.currentTarget);
+		    }
+		  };
+
+		  elem2.addEventListener('click', obj);
+		</script>		
+
+
+		<hr>
+
+		<button id="elem3">Click me(elem3)</button>
+
+		<script>
+		  class Menu {
+		    handleEvent(event) {
+		      // mousedown -> onMousedown
+		      let method = 'on' + event.type[0].toUpperCase() + event.type.slice(1);
+		      this[method](event);
+		    }
+
+		    onMousedown() {
+		      elem3.innerHTML = "Mouse button pressed";
+		    }
+
+		    onMouseup() {
+		      elem3.innerHTML += "...and released.";
+		    }
+		  }
+
+		  let menu = new Menu();
+		  elem3.addEventListener('mousedown', menu);
+		  elem3.addEventListener('mouseup', menu);
+		</script>		
+
+
+		<hr>
+
+		<button id="buttonClickToHideTheText">click to hide the text</button>
+		<div id="text">
+				text to hide
+		</div>
+
+		<script type="text/javascript">
+			let btnHideText = document.querySelector('#buttonClickToHideTheText');
+			btnHideText.onclick = function(event){
+				let div = document.querySelector('#text');
+				div.hidden = true;
+				//div.style.display = 'none';
+			}
+		</script>
+
+		<hr>
+
+		<input type="button" name="" value='click to hide this button' id="buttonHideThis">
+
+		<script type="text/javascript">
+			document.querySelector('#buttonHideThis').onclick = function(event){
+				event.currentTarget.hidden = true;	
+			}
+		</script>
+
+  </body>
+
+	<script type="text/javascript" defer>
+		let btnClickMe = document.querySelector('#buttonClickMe');
+		btnClickMe.addEventListener('click', ()=> {
+			console.log('click btnClickMe');
+		});
+	</script>    
+
+</html>
